@@ -1,2 +1,2 @@
-# Projeto
-Mineração
+# Mineração SpamBase
+
