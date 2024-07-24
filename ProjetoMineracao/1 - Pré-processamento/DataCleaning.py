@@ -1,6 +1,5 @@
 import pandas as pd
 
-
 def principal():
     # Atualize os caminhos dos arquivos de entrada e saída
     arquivo_entrada = 'C:\\Users\\CASA\Downloads\spambase (2)\\ProjetoMineracao\\0 - Conjunto de dados\\spambase.data'

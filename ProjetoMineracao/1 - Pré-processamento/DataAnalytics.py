@@ -1,10 +1,10 @@
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
+import pandas as pd 
+import seaborn as sns 
+import matplotlib.pyplot as plt 
 
 def main():
     # Define o caminho do arquivo CSV
-    arquivo_entrada = 'C:\\Users\\CASA\\Downloads\\spambase (2)\\ProjetoMineracao\\1 - Pré-processamento\\spam_data_normalizado.csv'
+    arquivo_entrada = 'C:\\Users\\CASA\\Downloads\\spambase (2)\\ProjetoMineracao\\0 - Conjunto de Dados\\spambase.data'
 
     # Lista com os nomes das colunas
     nomes = ['word_freq_make', 'word_freq_address', 'word_freq_all', 'word_freq_3d', 'word_freq_our',
