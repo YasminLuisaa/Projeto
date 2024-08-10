@@ -1,11 +1,10 @@
 import pandas as pd
 import seaborn as sns
+from sklearn.model_selection import train_test_split, cross_val_score, cross_val_predict
 from sklearn.preprocessing import StandardScaler
-from sklearn.cluster import KMeans, DBSCAN
-from sklearn.mixture import GaussianMixture
-from sklearn.metrics import silhouette_score, homogeneity_score
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import confusion_matrix, classification_report, accuracy_score, precision_score, recall_score, f1_score
 import matplotlib.pyplot as plt
-from sklearn.decomposition import PCA
 
 # Carregar dados
 input_file = 'C:\\Users\\CASA\\Downloads\\spambase (2)\\ProjetoMineracao\\1 - Pré-processamento\\spam_data_normalizado.csv'
@@ -30,80 +29,43 @@ column_names = [
 # Carregar os dados
 spambase_data = pd.read_csv(input_file, names=column_names)
 
-# Visualização inicial
-sns.scatterplot(data=spambase_data, x='word_freq_your', y='word_freq_000', hue='spam')
-plt.title('SPAM vs Não-SPAM baseado em word_freq_your e word_freq_000')
-plt.xlabel('word_freq_your')
-plt.ylabel('word_freq_000')
-plt.show()
-
-# Análise de correlação para seleção de características
-correlation_matrix = spambase_data.corr()
-top_features = correlation_matrix['spam'].abs().sort_values(ascending=False).index[1:11]
-
-# Visualizar a correlação das características selecionadas
-plt.figure(figsize=(12, 8))
-sns.heatmap(spambase_data[top_features].corr(), annot=True, cmap='coolwarm')
-plt.title('Matriz de Correlação das Principais Características')
-plt.show()
-
-# Dados reduzidos com as características mais relevantes
-X_reduced = spambase_data[top_features]
+# Selecionando os dados
+X = spambase_data.drop('spam', axis=1)
 y = spambase_data['spam']
 
 # Normalização dos dados
 scaler = StandardScaler()
-X_reduced_scaled = scaler.fit_transform(X_reduced)
+X_scaled = scaler.fit_transform(X)
 
-# Redução de dimensionalidade com PCA
-pca = PCA(n_components=2)
-X_pca = pca.fit_transform(X_reduced_scaled)
+# Dividir os dados em treino e teste
+X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.3, random_state=42)
 
-# Aplicação de KMeans variando o número de clusters
-silhouette_scores = []
-inertias = []
-homogeneity_scores = []
-k_values = range(2, 11)
+# Instanciar o modelo KNN
+knn = KNeighborsClassifier(n_neighbors=5)
 
-for k in k_values:
-    kmeans = KMeans(n_clusters=k, init='k-means++', max_iter=300, n_init=10, random_state=42)
-    kmeans.fit(X_pca)
-    labels = kmeans.labels_
-    silhouette_scores.append(silhouette_score(X_pca, labels))
-    inertias.append(kmeans.inertia_)
-    homogeneity_scores.append(homogeneity_score(y, labels))
+# Validação cruzada
+cv_scores = cross_val_score(knn, X_train, y_train, cv=5, scoring='accuracy')
+print(f"Validação Cruzada - Acurácia média: {cv_scores.mean():.2f}")
 
-# Plotando a Pontuação Silhouette e Inércia
-fig, ax1 = plt.subplots()
+# Treinar o modelo
+knn.fit(X_train, y_train)
 
-ax2 = ax1.twinx()
-ax1.plot(k_values, silhouette_scores, 'g-')
-ax2.plot(k_values, inertias, 'b-')
+# Predições
+y_pred = knn.predict(X_test)
 
-ax1.set_xlabel('Número de Clusters (k)')
-ax1.set_ylabel('Pontuação Silhouette', color='g')
-ax2.set_ylabel('Inércia', color='b')
-
-plt.title('Silhouette e Inércia para Diferentes Valores de k')
+# Matriz de Confusão
+conf_matrix = confusion_matrix(y_test, y_pred)
+sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues')
+plt.title('Matriz de Confusão')
+plt.xlabel('Classe Predita')
+plt.ylabel('Classe Real')
 plt.show()
 
-# Plotando Homogeneidade
-plt.figure(figsize=(10, 5))
-plt.plot(k_values, homogeneity_scores, marker='o')
-plt.xlabel('Número de Clusters (k)')
-plt.ylabel('Homogeneidade')
-plt.title('Homogeneidade para Diferentes Valores de k')
-plt.show()
+# Métricas de Classificação
+print("Acurácia:", accuracy_score(y_test, y_pred))
+print("Precisão:", precision_score(y_test, y_pred))
+print("Revocação:", recall_score(y_test, y_pred))
+print("F1 Score:", f1_score(y_test, y_pred))
 
-# Visualização dos clusters formados para diferentes valores de k
-for k in k_values:
-    kmeans = KMeans(n_clusters=k, init='k-means++', max_iter=300, n_init=10, random_state=42)
-    labels = kmeans.fit_predict(X_pca)
-
-    plt.figure(figsize=(10, 7))
-    plt.scatter(X_pca[:, 0], X_pca[:, 1], c=labels, cmap='viridis', edgecolor='k', s=50)
-    plt.title(f'Clusters Formados pelo KMeans com k={k} (PCA)')
-    plt.xlabel('Componente PCA 1')
-    plt.ylabel('Componente PCA 2')
-    plt.colorbar(label='Clusters')
-    plt.show()
+# Relatório de Classificação completo
+print("\nRelatório de Classificação:\n", classification_report(y_test, y_pred))
