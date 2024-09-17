@@ -1,0 +1,16 @@
+C:\Users\CASA\source\repos\jogodavelha1\jogodavelha\bin\Debug\net8.0-windows\jogodavelha.exe
+C:\Users\CASA\source\repos\jogodavelha1\jogodavelha\bin\Debug\net8.0-windows\jogodavelha.deps.json
+C:\Users\CASA\source\repos\jogodavelha1\jogodavelha\bin\Debug\net8.0-windows\jogodavelha.runtimeconfig.json
+C:\Users\CASA\source\repos\jogodavelha1\jogodavelha\bin\Debug\net8.0-windows\jogodavelha.dll
+C:\Users\CASA\source\repos\jogodavelha1\jogodavelha\bin\Debug\net8.0-windows\jogodavelha.pdb
+C:\Users\CASA\source\repos\jogodavelha1\jogodavelha\obj\Debug\net8.0-windows\jogodavelha.Form1.resources
+C:\Users\CASA\source\repos\jogodavelha1\jogodavelha\obj\Debug\net8.0-windows\jogodavelha.csproj.GenerateResource.cache
+C:\Users\CASA\source\repos\jogodavelha1\jogodavelha\obj\Debug\net8.0-windows\jogodavelha.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\CASA\source\repos\jogodavelha1\jogodavelha\obj\Debug\net8.0-windows\jogodavelha.AssemblyInfoInputs.cache
+C:\Users\CASA\source\repos\jogodavelha1\jogodavelha\obj\Debug\net8.0-windows\jogodavelha.AssemblyInfo.cs
+C:\Users\CASA\source\repos\jogodavelha1\jogodavelha\obj\Debug\net8.0-windows\jogodavelha.csproj.CoreCompileInputs.cache
+C:\Users\CASA\source\repos\jogodavelha1\jogodavelha\obj\Debug\net8.0-windows\jogodavelha.dll
+C:\Users\CASA\source\repos\jogodavelha1\jogodavelha\obj\Debug\net8.0-windows\refint\jogodavelha.dll
+C:\Users\CASA\source\repos\jogodavelha1\jogodavelha\obj\Debug\net8.0-windows\jogodavelha.pdb
+C:\Users\CASA\source\repos\jogodavelha1\jogodavelha\obj\Debug\net8.0-windows\jogodavelha.genruntimeconfig.cache
+C:\Users\CASA\source\repos\jogodavelha1\jogodavelha\obj\Debug\net8.0-windows\ref\jogodavelha.dll
